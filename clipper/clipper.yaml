@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clipper-deployment
+  labels:
+    app: clipper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clipper
+  template:
+    metadata:
+      labels:
+        app: clipper
+    spec:
+      containers:
+        - name: clipper
+          image: jleobernard/clipper:1.0.0
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: clipper-storage
+              mountPath: /kosubs
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "4"
+      volumes:
+        - name: clipper-storage
+          persistentVolumeClaim:
+            claimName: clipper-pv-claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: clipper-pv-claim
+spec:
+  volumeName: pv-ko-store
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clipper-service
+spec:
+  selector:
+    app: clipper
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 38080
