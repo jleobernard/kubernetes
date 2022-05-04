@@ -22,6 +22,9 @@ spec:
           volumeMounts:
             - name: clipper-storage
               mountPath: /kosubs
+          env:
+            - name: CLIP_CONF_FILE_PATH
+              value: /go/go-clipper/env.json
           resources:
             limits:
               memory: 512Mi
