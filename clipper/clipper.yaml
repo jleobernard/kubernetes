@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: clipper
-          image: jleobernard/clipper:1.0.0
+          image: jleobernard/clipper:1.0.1
           ports:
             - containerPort: 8080
           volumeMounts:
