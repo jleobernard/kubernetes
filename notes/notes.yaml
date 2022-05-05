@@ -31,7 +31,7 @@ spec:
               mountPath: /logs
           env:
             - name: SPRING_PROFILE
-              value: validation -Dsubs.store.path=/kosubs
+              value: validation -Dsubs.store.path=/kosubs -Ddata.dir=/data
             - name: JAVA_OPTS
               value: -Xms128m -Xmx2048m
             - name: NOTES_DB_HOST
