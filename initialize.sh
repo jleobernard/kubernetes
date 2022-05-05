@@ -20,8 +20,8 @@ kubectl apply -f clipper/clipper.yaml
 
 minikube service clipper-service
 
-#kubectl apply -f notes-volumes.yaml
-#kubectl apply -f notes-secret.yaml
-#kubectl apply -f notes.yaml
+kubectl apply -f notes/notes-volumes.yaml
+kubectl apply -f notes/notes-secret.yaml
+kubectl apply -f notes/notes.yaml
 
-# minikube service notes-service
+minikube service notes-service

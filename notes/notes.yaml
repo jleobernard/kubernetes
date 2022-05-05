@@ -70,7 +70,7 @@ metadata:
   name: notes-pv-claim
 spec:
   volumeName: pv-ko-store
-  storageClassName: manual
+  storageClassName: ""
   accessModes:
     - ReadWriteMany
   resources:
