@@ -17,6 +17,10 @@ spec:
       containers:
         - name: notes
           image: jleobernard/notes:2.0.0
+          resources:
+            limits:
+              memory: 4Gi
+              cpu: "4"
           ports:
             - containerPort: 8080
           volumeMounts:
@@ -71,7 +75,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 100Gi
+      storage: 500Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
