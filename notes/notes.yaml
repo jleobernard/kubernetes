@@ -20,7 +20,6 @@ spec:
           resources:
             limits:
               memory: 4Gi
-              cpu: "4"
           ports:
             - containerPort: 8080
           volumeMounts:
