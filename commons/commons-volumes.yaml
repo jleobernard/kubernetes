@@ -11,6 +11,7 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
   hostPath:
     path: /opt/data/korean-subs/store
 ---
@@ -20,6 +21,7 @@ metadata:
   name: pv-ko-store-claim
 spec:
   volumeName: pv-ko-store
+  storageClassName: manual
   accessModes:
     - ReadWriteMany
   resources:
