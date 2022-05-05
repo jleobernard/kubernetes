@@ -17,8 +17,8 @@ nohup  minikube mount /opt/data/korean-subs/store:/opt/data/korean-subs/store &
 kubectl apply -f commons/commons-volumes.yaml
 
 kubectl apply -f clipper/clipper.yaml
-
 minikube service clipper-service
+kubectl apply -f clipper/clipper-configmap.yaml
 
 kubectl apply -f notes/notes-volumes.yaml
 kubectl apply -f notes/notes-secret.yaml

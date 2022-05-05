@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: notes
-          image: jleobernard/notes:2.0.0
+          image: jleobernard/notes:2.0.1
           resources:
             limits:
               memory: 4Gi
@@ -40,7 +40,7 @@ spec:
               value: "5432"
             - name: NOTES_DB_NAME
               value: notes
-            - name: NOTES_DB_USER
+            - name: NOTES_DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: notes-secret
@@ -50,6 +50,16 @@ spec:
                 secretKeyRef:
                   name: notes-secret
                   key: notes-db-user
+            - name: NOTES_JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: notes-secret
+                  key: notes-jwt-key
+            - name: CLIPPER_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: clipper-configmap
+                  key: clipper_url
       imagePullSecrets:
         - name: regcred
       volumes:
@@ -96,7 +106,6 @@ metadata:
 spec:
   selector:
     app: notes
-  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 8080
