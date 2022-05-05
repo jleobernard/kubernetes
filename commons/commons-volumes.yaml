@@ -14,3 +14,15 @@ spec:
   storageClassName: ""
   hostPath:
     path: /opt/data/korean-subs/store
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pv-ko-store-claim
+spec:
+  volumeName: pv-ko-store
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi

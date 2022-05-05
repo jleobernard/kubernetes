@@ -32,20 +32,7 @@ spec:
       volumes:
         - name: clipper-storage
           persistentVolumeClaim:
-            claimName: clipper-pv-claim
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: clipper-pv-claim
-spec:
-  volumeName: pv-ko-store
-  storageClassName: ""
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 500Gi
+            claimName: pv-ko-store-claim
 ---
 apiVersion: v1
 kind: Service
