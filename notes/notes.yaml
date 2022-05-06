@@ -117,7 +117,7 @@ metadata:
   name: notes-ingress
 spec:
   rules:
-  - host: notes.jleo.tech
+  - host: notes-service.com
     http:
       paths:
       - path: /
