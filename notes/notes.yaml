@@ -106,9 +106,20 @@ metadata:
 spec:
   selector:
     app: notes
-  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 30001
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: notes-ingress
+spec:
+  rules:
+  - host: notes.jleo.tech
+    http:
+      paths:
+      - backend:
+          serviceName: notes-service
+          servicePort: 8080
