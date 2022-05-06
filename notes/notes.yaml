@@ -103,10 +103,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: notes-service
-  type: LoadBalancer
 spec:
   selector:
     app: notes
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 8080
