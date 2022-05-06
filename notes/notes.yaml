@@ -17,9 +17,6 @@ spec:
       containers:
         - name: notes
           image: jleobernard/notes:2.0.1
-          resources:
-            limits:
-              memory: 4Gi
           ports:
             - containerPort: 8080
           volumeMounts:
@@ -111,15 +108,21 @@ spec:
       port: 8080
       targetPort: 8080
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: notes-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: notes.jleo.tech
+  - host: notes-service.com
     http:
       paths:
-      - backend:
-          serviceName: notes-service
-          servicePort: 8080
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: notes-service
+            port:
+              number: 8080

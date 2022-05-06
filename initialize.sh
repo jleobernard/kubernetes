@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -e
-
+my_docker_dir=$(realpath ~/.docker)
+path_to_file="$my_docker_dir/config.json"
 docker login
 kubectl create secret generic regcred \
-    --from-file=.dockerconfigjson=/home/debian/.docker/config.json \
+    --from-file=.dockerconfigjson=$path_to_file \
     --type=kubernetes.io/dockerconfigjson
-docker logout
+#docker logout
 
 minikube addons enable ingress
 
@@ -24,4 +25,4 @@ kubectl apply -f notes/notes-volumes.yaml
 kubectl apply -f notes/notes-secret.yaml
 kubectl apply -f notes/notes.yaml
 
-minikube service notes-service
+#minikube service notes-service
