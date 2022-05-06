@@ -115,12 +115,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: notes-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: notes-service.com
     http:
       paths:
-      - path: /
+      - path: /api
         pathType: Prefix
         backend:
           service:
