@@ -111,14 +111,14 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 8080
+      nodePort: 30008
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: notes-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
   - host: notes-service.com
