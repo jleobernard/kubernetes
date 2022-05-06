@@ -35,20 +35,7 @@ spec:
             claimName: nginx-pv-claim-letsencrypt
         - name: kosubs-storage
           persistentVolumeClaim:
-            claimName: nginx-pv-claim-kosubs
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: notes-pv-claim
-spec:
-  volumeName: pv-ko-store
-  storageClassName: manual
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 100Gi
+            claimName: pv-ko-store-claim
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
