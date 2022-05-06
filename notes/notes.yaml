@@ -111,15 +111,18 @@ spec:
       port: 8080
       targetPort: 8080
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: notes-ingress
 spec:
   rules:
-  - host: notes.jleo.tech
-    http:
+  - http:
       paths:
-      - backend:
-          serviceName: notes-service
-          servicePort: 8080
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: notes-service
+            port:
+            number: 8080
