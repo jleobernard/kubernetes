@@ -17,9 +17,6 @@ spec:
       containers:
         - name: notes
           image: jleobernard/notes:2.0.1
-          resources:
-            limits:
-              memory: 4Gi
           ports:
             - containerPort: 8080
           volumeMounts:
@@ -116,7 +113,7 @@ kind: Ingress
 metadata:
   name: notes-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: notes-service.com
