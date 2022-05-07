@@ -24,4 +24,4 @@ kubectl apply -f notes/notes-volumes.yaml
 kubectl apply -f notes/notes-secret.yaml
 kubectl apply -f notes/notes.yaml
 
-minikube service notes-service
+#minikube service notes-service
