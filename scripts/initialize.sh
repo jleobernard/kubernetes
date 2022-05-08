@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 set -e
+
+minikube start
+
 my_docker_dir=$(realpath ~/.docker)
 path_to_file="$my_docker_dir/config.json"
 docker login
@@ -25,4 +28,4 @@ kubectl apply -f notes/notes-volumes.yaml
 kubectl apply -f notes/notes-secret.yaml
 kubectl apply -f notes/notes.yaml
 
-#minikube service notes-service
+/opt/leo/kubernetes/scripts/rp.sh
