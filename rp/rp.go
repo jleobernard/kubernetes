@@ -38,5 +38,5 @@ func main() {
 	// handle all requests to your server using the proxy
 	http.HandleFunc("/", ProxyRequestHandler(proxy))
 	log.Printf("Listening on %s for RP -> %s", port, domain)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf("172.17.0.1:%s", port), nil))
 }
