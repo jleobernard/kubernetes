@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  ports:
+  - port: 5432
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - image: postgres:13.6-alpine
+        name: mysql
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
+        ports:
+        - containerPort: 5432
+          name: mysql
+        volumeMounts:
+        - name: postgres-data-storage
+          mountPath: /var/lib/postgresql/data
+        - name: postgres-conf-storage
+          mountPath: /etc/postgresql/postgresql.conf
+      volumes:
+      - name: postgres-data-storage
+        persistentVolumeClaim:
+          claimName: pvc-postgres-data
+      - name: postgres-conf-storage
+        persistentVolumeClaim:
+          claimName: pvc-postgres-conf
