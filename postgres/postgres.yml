@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - image: postgres:13.6-alpine
-        name: mysql
+        name: postgres
         env:
         - name: POSTGRES_USER
           valueFrom:
@@ -39,7 +39,7 @@ spec:
               key: postgres-password
         ports:
         - containerPort: 5432
-          name: mysql
+          name: postgres
         volumeMounts:
         - name: postgres-data-storage
           mountPath: /var/lib/postgresql/data
