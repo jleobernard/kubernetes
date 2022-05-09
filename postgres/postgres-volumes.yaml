@@ -6,7 +6,7 @@ metadata:
     type: local
 spec:
   capacity:
-    storage: 500Gi
+    storage: 100Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
@@ -26,7 +26,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 500Gi
+      storage: 100Gi
 ---
 apiVersion: v1
 kind: PersistentVolume
