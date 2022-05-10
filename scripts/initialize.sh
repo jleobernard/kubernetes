@@ -24,7 +24,7 @@ kubectl apply -f commons/commons-volumes.yaml
 
 kubectl apply -f postgres/postgres-secret.yaml
 kubectl apply -f postgres/postgres-volumes.yaml
-kubectl apply -f postgres/postgres.yaml
+kubectl apply -f postgres/postgres.yml
 
 kubectl apply -f clipper/clipper.yaml
 minikube service clipper-service

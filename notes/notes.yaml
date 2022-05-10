@@ -33,7 +33,7 @@ spec:
               value: -Xms128m -Xmx2048m
             - name: NOTES_DB_HOST
               valueFrom:
-                secretKeyRef:
+                configMapKeyRef:
                  name: postgres-configmap
                  key: database_url
             - name: NOTES_DB_PORT
