@@ -37,6 +37,8 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: postgres-password
+        - name: POSTGRES_DB
+          value: postgresdb
         ports:
         - containerPort: 5432
           name: postgres
