@@ -49,7 +49,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: notes-secret
-                  key: notes-db-user
+                  key: notes-db-password
             - name: NOTES_JWT_SECRET_KEY
               valueFrom:
                 secretKeyRef:
