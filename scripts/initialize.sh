@@ -16,11 +16,15 @@ minikube addons enable ingress
 nohup  minikube mount /opt/containers/back-hekima/data:/opt/containers/back-hekima/data &
 nohup  minikube mount /opt/containers/back-hekima/logs:/opt/containers/back-hekima/logs &
 nohup  minikube mount /opt/data/korean-subs/store:/opt/data/korean-subs/store &
-nohup  minikube mount /opt/containers/postgres/data:/postgres/data &
+nohup  minikube mount /opt/k8sdata/postgres:/postgres &
 nohup  minikube mount /opt/containers/postgres/conf:/postgres/conf &
 
 
 kubectl apply -f commons/commons-volumes.yaml
+
+kubectl apply -f postgres/postgres-secret.yaml
+kubectl apply -f postgres/postgres-volumes.yaml
+kubectl apply -f postgres/postgres.yaml
 
 kubectl apply -f clipper/clipper.yaml
 minikube service clipper-service

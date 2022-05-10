@@ -32,7 +32,10 @@ spec:
             - name: JAVA_OPTS
               value: -Xms128m -Xmx2048m
             - name: NOTES_DB_HOST
-              value: localhost
+              valueFrom:
+                secretKeyRef:
+                 name: postgres-configmap
+                 key: database_url
             - name: NOTES_DB_PORT
               value: "5432"
             - name: NOTES_DB_NAME

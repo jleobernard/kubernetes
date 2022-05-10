@@ -52,3 +52,10 @@ spec:
       - name: postgres-conf-storage
         persistentVolumeClaim:
           claimName: pvc-postgres-conf
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap
+data:
+  database_url: postgres
