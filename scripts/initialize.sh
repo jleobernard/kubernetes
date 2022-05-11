@@ -16,8 +16,8 @@ minikube addons enable ingress
 nohup  minikube mount /opt/containers/back-hekima/data:/opt/containers/back-hekima/data &
 nohup  minikube mount /opt/containers/back-hekima/logs:/opt/containers/back-hekima/logs &
 nohup  minikube mount /opt/data/korean-subs/store:/opt/data/korean-subs/store &
-nohup  minikube mount /opt/k8sdata/postgres:/postgres &
-nohup  minikube mount /opt/containers/postgres/conf:/postgres/conf &
+nohup  minikube mount /opt/k8sdata/postgres:/postgresdata &
+nohup  minikube mount /opt/containers/postgres/conf:/postgresconf &
 
 
 kubectl apply -f commons/commons-volumes.yaml
