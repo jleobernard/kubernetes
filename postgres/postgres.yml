@@ -27,6 +27,8 @@ spec:
       - image: postgres:13.6-alpine
         name: postgres
         env:
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
@@ -44,7 +46,7 @@ spec:
           name: postgres
         volumeMounts:
         - name: postgres-data-storage
-          mountPath: /var/lib/postgresql
+          mountPath: /var/lib/postgresql/data
         - name: postgres-conf-storage
           mountPath: /etc/postgresql
       volumes:
