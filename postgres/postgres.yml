@@ -49,6 +49,7 @@ spec:
           mountPath: /var/lib/postgresql/data
         - name: postgres-conf-storage
           mountPath: /etc/postgresql
+        resources: {}
       volumes:
       - name: postgres-data-storage
         persistentVolumeClaim:
