@@ -6,6 +6,11 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: "nginx"
 spec:
+  defaultBackend:
+    service:
+      name: notes-static
+      port:
+        number: 80
   tls:
   - hosts:
     - notes.jleo.tech
@@ -14,7 +19,7 @@ spec:
   - host: notes.jleo.tech
     http:
       paths:
-      - path: /
+      - path: /api
         pathType: Prefix
         backend:
           service:
