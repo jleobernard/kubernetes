@@ -110,3 +110,40 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notes-static
+  labels:
+    app: notes-static
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notes-static
+  template:
+    metadata:
+      labels:
+        app: notes-static
+    spec:
+      containers:
+        - name: notes
+          image: jleobernard/notes-front:1.0.0
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notes-static
+spec:
+  selector:
+    app: notes-static
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
