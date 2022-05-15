@@ -5,6 +5,10 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  tls:
+  - hosts:
+    - notes.jleo.tech
+    secretName: ssl-cert-production
   rules:
   - host: notes.jleo.tech
     http:
