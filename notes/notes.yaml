@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: notes
-          image: jleobernard/notes:2.0.1
+          image: jleobernard/notes:2.0.2
           ports:
             - containerPort: 8080
           volumeMounts:
