@@ -133,8 +133,15 @@ spec:
           image: jleobernard/notes-front:1.0.0
           ports:
             - containerPort: 80
+          volumeMounts:
+            - name: kosubs-storage
+              mountPath: /kosubs
       imagePullSecrets:
         - name: regcred
+      volumes:
+        - name: kosubs-storage
+          persistentVolumeClaim:
+            claimName: pv-ko-store-claim
 ---
 apiVersion: v1
 kind: Service
