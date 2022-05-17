@@ -21,7 +21,7 @@ spec:
             - containerPort: 8080
           volumeMounts:
             - name: clipper-storage
-              mountPath: /kosubs
+              mountPath: /opt/data/korean-subs/store
           env:
             - name: CLIP_CONF_FILE_PATH
               value: /go/go-clipper/env.json
@@ -39,6 +39,6 @@ spec:
     app: clipper
   ports:
     - protocol: TCP
-      port: 8080
+      port: 80
       targetPort: 8080
 
