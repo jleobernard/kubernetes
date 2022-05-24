@@ -28,3 +28,17 @@ spec:
   commonName: notes.jleo.tech
   dnsNames:
   - notes.jleo.tech
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ssl-cert-cv
+  namespace: default
+spec:
+  secretName: ssl-cert-cv
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: cv.jleo.tech
+  dnsNames:
+  - cv.jleo.tech
