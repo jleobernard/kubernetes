@@ -130,7 +130,7 @@ spec:
     spec:
       containers:
         - name: notes
-          image: jleobernard/notes-front:1.0.0
+          image: jleobernard/notes-front:1.0.1
 #          imagePullPolicy: Always
           ports:
             - containerPort: 80
