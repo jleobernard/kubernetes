@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: notes
-          image: jleobernard/notes:2.1.0
+          image: jleobernard/notes:2.1.1
 #          imagePullPolicy: Always
           ports:
             - containerPort: 8080
