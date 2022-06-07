@@ -42,3 +42,17 @@ spec:
   commonName: cv.jleo.tech
   dnsNames:
   - cv.jleo.tech
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ssl-cert-nextcloud
+  namespace: default
+spec:
+  secretName: ssl-cert-nextcloud
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: files.jleo.tech
+  dnsNames:
+  - files.jleo.tech
