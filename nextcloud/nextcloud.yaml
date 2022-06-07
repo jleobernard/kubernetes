@@ -50,10 +50,9 @@ spec:
           image: nextcloud:23.0-fpm
           ports:
             - containerPort: 9000
-          volumes:
+          volumeMounts:
             - name: nextcloud-storage
-              persistentVolumeClaim:
-                claimName: pvc-nextcloud-storage
+              mountPath: /var/www/html
           env:
             - name: POSTGRES_HOST
               valueFrom:
@@ -82,9 +81,10 @@ spec:
                 secretKeyRef:
                   name: nextcloud-secret
                   key: nextcloud-admin-password
-      volumeMounts:
+      volumes:
         - name: nextcloud-storage
-          mountPath: /var/www/html
+          persistentVolumeClaim:
+            claimName: pvc-nextcloud-storage
 ---
 apiVersion: v1
 kind: Service
