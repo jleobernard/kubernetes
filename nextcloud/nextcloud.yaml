@@ -104,6 +104,8 @@ spec:
                 path: nginx.conf
               - key: files.jleo.tech.conf
                 path: conf.d/files.jleo.tech.conf # dig directory
+              - key: fastcgi_params
+                path: fastcgi_params # dig directory
         - name: log
           emptyDir: {}
 ---
