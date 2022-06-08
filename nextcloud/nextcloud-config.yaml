@@ -3,10 +3,9 @@ kind: ConfigMap
 metadata:
   name: nextcloud-configmap
 data:
-  nextcloud_url: nextcloud
   files.jleo.tech.conf: |
     upstream php-handler {
-        server ${NEXTCLOUD_URL};
+        server localhost:9000;
     }
     server {
         listen 80;
@@ -142,7 +141,7 @@ data:
       # Logging
       access_log             logs/access.log;
       error_log              logs/error.log warn;
-      include    conf/mime.types;
+      #include    conf/mime.types;
       default_type application/octet-stream;
 
         # SSL
