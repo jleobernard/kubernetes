@@ -90,7 +90,7 @@ spec:
             - mountPath: /etc/nginx # mount nginx-conf volumn to /etc/nginx
               readOnly: true
               name: nginx-conf
-            - mountPath: /var/log/nginx
+            - mountPath: /etc/nginx/logs
               name: log
       volumes:
         - name: nextcloud-storage
