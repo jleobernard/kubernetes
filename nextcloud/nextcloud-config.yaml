@@ -36,8 +36,7 @@ data:
         server localhost:9000;
     }
     server {
-        listen 80;
-        server_name files.jleo.tech;
+        listen 80 default_server;
         error_log  /etc/nginx/logs/error-files.jleo.tech.log;
         add_header Referrer-Policy "no-referrer" always;
         add_header X-Content-Type-Options "nosniff" always;
