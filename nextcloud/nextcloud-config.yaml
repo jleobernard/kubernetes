@@ -4,7 +4,7 @@ metadata:
   name: nextcloud-configmap
 data:
   nextcloud_url: nextcloud
-  files.jleo.tech: |
+  files.jleo.tech.conf: |
     upstream php-handler {
         server ${NEXTCLOUD_URL};
     }
