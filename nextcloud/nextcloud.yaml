@@ -103,19 +103,21 @@ spec:
               - key: nginx.conf
                 path: nginx.conf
               - key: files.jleo.tech.conf
-                path: conf.d/files.jleo.tech.conf # dig directory
+                path: conf.d/files.jleo.tech.conf
               - key: fastcgi_params
-                path: fastcgi_params # dig directory
+                path: fastcgi_params
+              - key: mime.types
+                path: conf/mime.types
         - name: log
           emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nextcloud-proxy
+  name: nextcloud
 spec:
   selector:
-    app: nextcloud-proxy
+    app: nextcloud
   ports:
     - protocol: TCP
       port: 80
@@ -141,6 +143,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: nextcloud-proxy
+            name: nextcloud
             port:
               number: 80
