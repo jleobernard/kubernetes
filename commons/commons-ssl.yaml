@@ -56,3 +56,17 @@ spec:
   commonName: files.jleo.tech
   dnsNames:
   - files.jleo.tech
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ssl-cert-resources
+  namespace: default
+spec:
+  secretName: ssl-cert-resources
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: resources.jleo.tech
+  dnsNames:
+  - resources.jleo.tech

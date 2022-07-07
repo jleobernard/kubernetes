@@ -1,0 +1,237 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-resources-storage
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 500Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: /opt/data/resources
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-resources-storage
+spec:
+  volumeName: pv-resources-storage
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: resources-configmap
+data:
+  mime.types: |
+    types {
+      text/html                             html htm shtml;
+      text/css                              css;
+      text/xml                              xml rss;
+      image/gif                             gif;
+      image/jpeg                            jpeg jpg;
+      application/x-javascript              js;
+      text/plain                            txt;
+      text/x-component                      htc;
+      text/mathml                           mml;
+      image/png                             png;
+      image/x-icon                          ico;
+      image/x-jng                           jng;
+      image/vnd.wap.wbmp                    wbmp;
+      image/svg+xml				svg svgz;
+      application/java-archive              jar war ear;
+      application/mac-binhex40              hqx;
+      application/pdf                       pdf;
+      application/x-cocoa                   cco;
+      application/x-java-archive-diff       jardiff;
+      application/x-java-jnlp-file          jnlp;
+      application/x-makeself                run;
+      application/x-perl                    pl pm;
+      application/x-pilot                   prc pdb;
+      application/x-rar-compressed          rar;
+      application/x-redhat-package-manager  rpm;
+      application/x-sea                     sea;
+      application/x-shockwave-flash         swf;
+      application/x-stuffit                 sit;
+      application/x-tcl                     tcl tk;
+      application/x-x509-ca-cert            der pem crt;
+      application/x-xpinstall               xpi;
+      application/zip                       zip;
+      application/octet-stream              deb;
+      application/octet-stream              bin exe dll;
+      application/octet-stream              dmg;
+      application/octet-stream              eot;
+      application/octet-stream              iso img;
+      application/octet-stream              msi msp msm;
+      audio/mpeg                            mp3;
+      audio/x-realaudio                     ra;
+      video/mpeg                            mpeg mpg;
+      video/quicktime                       mov;
+      video/x-flv                           flv;
+      video/x-msvideo                       avi;
+      video/x-ms-wmv                        wmv;
+      video/x-ms-asf                        asx asf;
+      video/x-mng                           mng;
+    }
+  resources.jleo.tech.conf: |
+    server {
+        listen 80 default_server;
+        error_log  /etc/nginx/logs/error-resources.jleo.tech.log;
+        add_header Referrer-Policy "no-referrer" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-Download-Options "noopen" always;
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Permitted-Cross-Domain-Policies "none" always;
+        add_header X-Robots-Tag "none" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+
+        # Path to the root of your installation
+        root /var/www/html;
+
+        location = /robots.txt {
+            allow all;
+            log_not_found off;
+            access_log off;
+        }
+        # set max upload size
+        client_max_body_size 1K;
+
+        # Enable gzip but do not remove ETag headers
+        gzip on;
+        gzip_vary on;
+        gzip_comp_level 4;
+        gzip_min_length 256;
+        gzip_proxied expired no-cache no-store private no_last_modified no_etag auth;
+        gzip_types application/atom+xml application/javascript application/json application/ld+json application/manifest+json application/rss+xml application/vnd.geo+json application/vnd.ms-fontobject application/x-font-ttf application/x-web-app-manifest+json application/xhtml+xml application/xml font/opentype image/bmp image/svg+xml image/x-icon text/cache-manifest text/css text/plain text/vcard text/vnd.rim.location.xloc text/vtt text/x-component text/x-cross-domain-policy;
+
+    }
+  nginx.conf: |
+    worker_processes  5;  ## Default: 1
+    error_log  logs/error.log;
+    pid        logs/nginx.pid;
+    worker_rlimit_nofile 8192;
+    events {
+      multi_accept       on;
+      worker_connections  4096;  ## Default: 1024
+    }
+    http {
+      charset                utf-8;
+        sendfile               on;
+        tcp_nopush             on;
+        tcp_nodelay            on;
+        server_tokens          off;
+        log_not_found          off;
+      # Logging
+      access_log             logs/access.log;
+      error_log              logs/error.log warn;
+      include    conf/mime.types;
+      default_type application/octet-stream;
+
+        # SSL
+        ssl_session_timeout    1d;
+        ssl_session_cache      shared:SSL:10m;
+        ssl_session_tickets    off;
+
+      log_format   main '$remote_addr - $remote_user [$time_local]  $status '
+        '"$request" $body_bytes_sent "$http_referer" '
+        '"$http_user_agent" "$http_x_forwarded_for"';
+      server_names_hash_bucket_size 128; # this seems to be required for some vhosts
+      proxy_headers_hash_max_size 512;
+      proxy_headers_hash_bucket_size 64;
+
+      include  /etc/nginx/conf.d/resources.jleo.tech.conf;
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resources
+  labels:
+    app: resources
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resources
+  template:
+    metadata:
+      labels:
+        app: resources
+    spec:
+      containers:
+        - name: resources
+          resources:
+          image:  nginx:1.23.0-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: resources-storage
+              mountPath: /var/www/html
+            - mountPath: /etc/nginx # mount nginx-conf volumn to /etc/nginx
+              readOnly: true
+              name: nginx-conf
+            - mountPath: /etc/nginx/logs
+              name: log
+      volumes:
+        - name: resources-storage
+          persistentVolumeClaim:
+            claimName: pvc-resources-storage
+        - name: nginx-conf
+          configMap:
+            name: resources-configmap # place ConfigMap `nginx-conf` on /etc/nginx
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+              - key: resources.jleo.tech.conf
+                path: conf.d/resources.jleo.tech.conf
+              - key: mime.types
+                path: conf/mime.types
+        - name: log
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resources
+spec:
+  selector:
+    app: resources
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: resources-ingress
+  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - resources.jleo.tech
+    secretName: ssl-cert-resources
+  rules:
+  - host: resources.jleo.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: resources
+            port:
+              number: 80
+
