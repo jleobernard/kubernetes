@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pynotes-ingress
+  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+spec:
+#  defaultBackend:
+#    service:
+#      name: pynotes-static
+#      port:
+#        number: 80
+  tls:
+  - hosts:
+    - pynotes.jleo.tech
+    secretName: ssl-cert-production
+  rules:
+  - host: pynotes.jleo.tech
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: pynotes-service
+            port:
+              number: 80
+  - host: pynotes.jleo.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pynotes-static
+            port:
+              number: 80

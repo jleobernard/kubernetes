@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pynotes
+  labels:
+    app: pynotes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pynotes
+  template:
+    metadata:
+      labels:
+        app: pynotes
+    spec:
+      containers:
+        - name: pynotes
+          image: jleobernard/pynotes:0.0.1
+#          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: pynotes-storage
+              mountPath: /kosubs
+            - name: pynotes-data
+              mountPath: /data
+            - name: pynotes-logs
+              mountPath: /logs
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: NOTES_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                 name: postgres-configmap
+                 key: database_url
+            - name: NOTES_DB_PORT
+              value: "5432"
+            - name: NOTES_DB_NAME
+              value: pynotes
+            - name: NOTES_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: pynotes-secret
+                  key: pynotes-db-user
+            - name: NOTES_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pynotes-secret
+                  key: pynotes-db-password
+            - name: NOTES_JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: pynotes-secret
+                  key: pynotes-jwt-key
+            - name: CLIPPER_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: clipper-configmap
+                  key: clipper_url
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: pynotes-storage
+          persistentVolumeClaim:
+            claimName: pv-ko-store-claim
+        - name: pynotes-data
+          persistentVolumeClaim:
+            claimName: pynotes-pv-claim-data
+        - name: pynotes-logs
+          persistentVolumeClaim:
+            claimName: pynotes-pv-claim-logs
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pynotes-pv-claim-data
+spec:
+  volumeName: pv-pynotes-data
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pynotes-pv-claim-logs
+spec:
+  volumeName: pv-pynotes-logs
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pynotes-service
+spec:
+  selector:
+    app: pynotes
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
