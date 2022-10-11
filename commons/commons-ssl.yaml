@@ -74,7 +74,7 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ssl-cert-production
+  name: ssl-cert-pynotes
   namespace: default
 spec:
   secretName: ssl-cert-production
