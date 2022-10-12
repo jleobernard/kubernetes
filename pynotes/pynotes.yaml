@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: pynotes
-          image: jleobernard/pynotes:0.0.1
+          image: jleobernard/pynotes@sha256:dc8f61991a2de0a8b7358b53a02cdb5e79c8356c57feb04a1718a5de3d3e9e49
 #          imagePullPolicy: Always
           ports:
             - containerPort: 80
@@ -30,6 +30,8 @@ spec:
           env:
             - name: PYTHONUNBUFFERED
               value: "1"
+            - name: SUBS_STORE_PATH
+              value: "/kosubs"
             - name: NOTES_DB_HOST
               valueFrom:
                 configMapKeyRef:
