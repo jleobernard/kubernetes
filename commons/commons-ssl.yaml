@@ -18,10 +18,10 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ssl-cert-production
+  name: ssl-cert-notes
   namespace: default
 spec:
-  secretName: ssl-cert-production
+  secretName: ssl-cert-notes
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
@@ -77,7 +77,7 @@ metadata:
   name: ssl-cert-pynotes
   namespace: default
 spec:
-  secretName: ssl-cert-production
+  secretName: ssl-cert-pynotes
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer

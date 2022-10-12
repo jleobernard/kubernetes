@@ -14,7 +14,7 @@ spec:
   tls:
   - hosts:
     - notes.jleo.tech
-    secretName: ssl-cert-production
+    secretName: ssl-cert-notes
   rules:
   - host: notes.jleo.tech
     http:

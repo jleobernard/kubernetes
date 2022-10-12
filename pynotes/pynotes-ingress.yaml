@@ -14,7 +14,7 @@ spec:
   tls:
   - hosts:
     - pynotes.jleo.tech
-    secretName: ssl-cert-production
+    secretName: ssl-cert-pynotes
   rules:
   - host: pynotes.jleo.tech
     http:
