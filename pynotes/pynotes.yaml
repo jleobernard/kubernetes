@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
         - name: pynotes
-          image: jleobernard/pynotes@sha256:dc8f61991a2de0a8b7358b53a02cdb5e79c8356c57feb04a1718a5de3d3e9e49
+          image: jleobernard/pynotes@sha256:3516e13f20a5becb009e614bbbf43c8677eb9cf6a6844e46a8f54522ca261ae9
 #          imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           volumeMounts:
             - name: pynotes-storage
               mountPath: /kosubs
@@ -40,7 +40,7 @@ spec:
             - name: NOTES_DB_PORT
               value: "5432"
             - name: NOTES_DB_NAME
-              value: pynotes
+              value: notes
             - name: NOTES_DB_USERNAME
               valueFrom:
                 secretKeyRef:
