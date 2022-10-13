@@ -25,14 +25,4 @@ spec:
           service:
             name: pynotes-service
             port:
-              number: 80
-  - host: pynotes.jleo.tech
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: pynotes-static
-            port:
-              number: 80
+              number: 8080
