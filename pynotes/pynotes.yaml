@@ -30,37 +30,45 @@ spec:
           env:
             - name: PYTHONUNBUFFERED
               value: "1"
-            - name: SUBS_STORE_PATH
-              value: "/kosubs"
-            - name: NOTES_DB_HOST
+            - name: PYNOTES_DB_HOST
               valueFrom:
                 configMapKeyRef:
                  name: postgres-configmap
                  key: database_url
-            - name: NOTES_DB_PORT
+            - name: PYNOTES_DB_PORT
               value: "5432"
-            - name: NOTES_DB_NAME
-              value: notes
-            - name: NOTES_DB_USERNAME
+            - name: PYNOTES_DB_NAME
+              value: pynotes
+            - name: PYNOTES_DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: pynotes-secret
                   key: pynotes-db-user
-            - name: NOTES_DB_PASSWORD
+            - name: PYNOTES_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: pynotes-secret
                   key: pynotes-db-password
-            - name: NOTES_JWT_SECRET_KEY
+            - name: NOTES_BE_LOGIN
               valueFrom:
                 secretKeyRef:
                   name: pynotes-secret
-                  key: pynotes-jwt-key
+                  key: notes-be-login
+            - name: NOTES_BE_PASSSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pynotes-secret
+                  key: notes-be-password
             - name: CLIPPER_SERVICE_URL
               valueFrom:
                 configMapKeyRef:
                   name: clipper-configmap
                   key: clipper_url
+            - name: NOTES_BE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: notes-configmap
+                  key: notes_url
       imagePullSecrets:
         - name: regcred
       volumes:
