@@ -59,11 +59,6 @@ spec:
                 secretKeyRef:
                   name: pynotes-secret
                   key: notes-be-password
-            - name: CLIPPER_SERVICE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: clipper-configmap
-                  key: clipper_url
             - name: NOTES_BE_URL
               valueFrom:
                 configMapKeyRef:
