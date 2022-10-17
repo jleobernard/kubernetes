@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: pynotes
-          image: jleobernard/pynotes@sha256:3516e13f20a5becb009e614bbbf43c8677eb9cf6a6844e46a8f54522ca261ae9
-#          imagePullPolicy: Always
+          image: jleobernard/pynotes:0.0.1
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           volumeMounts:
