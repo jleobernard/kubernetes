@@ -28,7 +28,7 @@ spec:
             - name: notes-logs
               mountPath: /logs
             - name: notes-secrets
-              mountPath: /secrets/fcm.json
+              mountPath: /secrets
           env:
             - name: SPRING_PROFILE
               value: validation -Dsubs.store.path=/kosubs -Ddata.dir=/data/upload
@@ -79,7 +79,7 @@ spec:
             claimName: notes-pv-claim-logs
         - name: notes-secrets
           secret:
-            secretName: google-credentials
+            secretName: commons-secret
             optional: false
 ---
 apiVersion: v1

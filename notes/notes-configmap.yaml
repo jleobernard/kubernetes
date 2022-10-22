@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: notes-configmap
 data:
-  notes_url: notes-service
+  notes_url: http://notes-service:8080
