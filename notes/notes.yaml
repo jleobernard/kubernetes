@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: notes
-          image: jleobernard/notes:2.1.4
+          image: jleobernard/notes:2.1.5
 #          imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -27,6 +27,8 @@ spec:
               mountPath: /data
             - name: notes-logs
               mountPath: /logs
+            - name: notes-secrets
+              mountPath: /secrets/fcm.json
           env:
             - name: SPRING_PROFILE
               value: validation -Dsubs.store.path=/kosubs -Ddata.dir=/data/upload
@@ -56,6 +58,8 @@ spec:
                 secretKeyRef:
                   name: notes-secret
                   key: notes-jwt-key
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secrets/fcm.json
             - name: CLIPPER_SERVICE_URL
               valueFrom:
                 configMapKeyRef:
@@ -73,6 +77,10 @@ spec:
         - name: notes-logs
           persistentVolumeClaim:
             claimName: notes-pv-claim-logs
+        - name: notes-secrets
+          secret:
+            secretName: google-credentials
+            optional: false
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
