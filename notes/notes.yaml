@@ -17,7 +17,7 @@ spec:
       containers:
         - name: notes
           image: jleobernard/notes:2.1.5
-#          imagePullPolicy: Always
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           volumeMounts:
@@ -138,7 +138,7 @@ spec:
     spec:
       containers:
         - name: notes
-          image: jleobernard/notes-front:1.1.0
+          image: jleobernard/notes-front:1.1.1
 #          imagePullPolicy: Always
           ports:
             - containerPort: 80

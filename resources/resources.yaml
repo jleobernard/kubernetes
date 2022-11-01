@@ -104,7 +104,7 @@ data:
             access_log off;
         }
         # set max upload size
-        client_max_body_size 1K;
+        client_max_body_size 256M;
 
         # Enable gzip but do not remove ETag headers
         gzip on;
