@@ -65,6 +65,8 @@ spec:
                 configMapKeyRef:
                   name: clipper-configmap
                   key: clipper_url
+            - name: NLP_SEARCH_URL
+              value: http://pynotes-service:8080
       imagePullSecrets:
         - name: regcred
       volumes:
