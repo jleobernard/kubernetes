@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ksubsanalyzer
+  labels:
+    app: ksubsanalyzer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ksubsanalyzer
+  template:
+    metadata:
+      labels:
+        app: ksubsanalyzer
+    spec:
+      containers:
+        - name: ksubsanalyzer
+          image: jleobernard/ksubsanalyzer:2.0.0
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: cache-volume
+              mountPath: /tmp
+            - name: kvids-storage
+              mountPath: /kosubs
+            - name: notes-secrets
+              mountPath: /data/secrets
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: GCP_PROJECT_ID
+              value: "laflemme"
+            - name: SKIP_FRAMES
+              value: "30"
+            - name: MODEL_NAME
+              value: "subs_attention_best_weights.pt"
+            - name: WORK_DIRECTORY
+              value: "/tmp/work"
+            - name: TARGET_DIRECTORY
+              value: "/kosubs"
+            - name: GCP_PUBSUB_SUBSCRIPTION_ID
+              value: "subs-processor"
+            - name: GCP_STORAGE_BUCKET_ID
+              value: "kovids"
+            - name: GCP_PUBSUB_CREDENTIALS
+              value: "/data/secrets/gcp-reader.json"
+            - name: GCP_STORAGE_CREDENTIALS
+              value: "/data/secrets/cloud-storage-writer.json"
+            - name: GCP_VISION_CREDENTIALS
+              value: "/data/secrets/laflemme-3b669604d7e6.json"
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: cache-volume
+          emptyDir: {}
+        - name: kvids-storage
+          persistentVolumeClaim:
+            claimName: pv-ko-store-claim
+        - name: ksubsanalyzer-secrets
+          secret:
+            secretName: commons-secret
+            optional: false
+
