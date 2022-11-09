@@ -23,7 +23,7 @@ spec:
               mountPath: /tmp
             - name: kvids-storage
               mountPath: /kosubs
-            - name: notes-secrets
+            - name: ksubsanalyzer-credentials
               mountPath: /data/secrets
           env:
             - name: PYTHONUNBUFFERED
@@ -38,16 +38,14 @@ spec:
               value: "/tmp/work"
             - name: TARGET_DIRECTORY
               value: "/kosubs"
+            - name: GCP_PUBSUB_TOPIC_ID
+              value: "subs"
             - name: GCP_PUBSUB_SUBSCRIPTION_ID
               value: "subs-processor"
             - name: GCP_STORAGE_BUCKET_ID
               value: "kovids"
-            - name: GCP_PUBSUB_CREDENTIALS
-              value: "/data/secrets/gcp-reader.json"
-            - name: GCP_STORAGE_CREDENTIALS
-              value: "/data/secrets/cloud-storage-writer.json"
-            - name: GCP_VISION_CREDENTIALS
-              value: "/data/secrets/laflemme-3b669604d7e6.json"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/data/secrets/ksubsanalyzer.json"
       imagePullSecrets:
         - name: regcred
       volumes:
@@ -56,8 +54,8 @@ spec:
         - name: kvids-storage
           persistentVolumeClaim:
             claimName: pv-ko-store-claim
-        - name: ksubsanalyzer-secrets
+        - name: ksubsanalyzer-credentials
           secret:
-            secretName: commons-secret
+            secretName: ksubsanalyzer-credentials
             optional: false
 
