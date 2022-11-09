@@ -27,7 +27,7 @@ spec:
               mountPath: /data
             - name: notes-logs
               mountPath: /logs
-            - name: notes-secrets
+            - name: notes-credentials
               mountPath: /data/secrets
           env:
             - name: SPRING_PROFILE
@@ -59,7 +59,7 @@ spec:
                   name: notes-secret
                   key: notes-jwt-key
             - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /data/secrets/fcm.json
+              value: /data/secrets/notes-backend.json
             - name: CLIPPER_SERVICE_URL
               valueFrom:
                 configMapKeyRef:
@@ -79,9 +79,9 @@ spec:
         - name: notes-logs
           persistentVolumeClaim:
             claimName: notes-pv-claim-logs
-        - name: notes-secrets
+        - name: notes-credentials
           secret:
-            secretName: commons-secret
+            secretName: notes-credentials
             optional: false
 ---
 apiVersion: v1
